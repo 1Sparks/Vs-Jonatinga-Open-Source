@@ -336,7 +336,8 @@ class PlayState extends MusicBeatState
 		executeModchart = false; // FORCE disable for non cpp targets
 		#end
 
-		trace('test: ' + executeModchart + " - " + Paths.lua(songLowercase + "/modchart"));
+		trace('test2: ' + executeModchart + " - " + Paths.lua(songLowercase + "/modchart"));
+
 
 		#if windows
 		// Making difficulty text for Discord Rich Presence.
