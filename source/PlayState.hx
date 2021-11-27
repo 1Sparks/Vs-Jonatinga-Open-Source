@@ -214,6 +214,7 @@ class PlayState extends MusicBeatState
 	var bgGirls:BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 
+    //var randomThing:Float = Math.random();
 	var talking:Bool = true;
 
 	public var songScore:Int = 0;
@@ -2027,7 +2028,7 @@ class PlayState extends MusicBeatState
 		{
 			// FlxG.log.add(i);
 			var babyArrow:FlxSprite = new FlxSprite(0, strumLine.y);
-
+			
 			// defaults if no noteStyle was found in chart
 			var noteTypeCheck:String = 'normal';
 
@@ -2518,6 +2519,7 @@ class PlayState extends MusicBeatState
 
 		if (health > 2)
 			health = 2;
+
 		if (healthBar.percent < 20)
 			iconP1.animation.curAnim.curFrame = 1;
 		else
@@ -3735,6 +3737,7 @@ class PlayState extends MusicBeatState
 					rating.destroy();
 				},
 				startDelay: Conductor.crochet * 0.001
+				trace('what the fuck!!!');
 			});
 
 			curSection += 1;
@@ -4346,6 +4349,8 @@ class PlayState extends MusicBeatState
 		}
 	}
 
+	var appearscreen:Bool = true;
+
 	var trainMoving:Bool = false;
 	var trainFrameTiming:Float = 0;
 
@@ -4661,6 +4666,38 @@ class PlayState extends MusicBeatState
 		{
 			boyfriend.playAnim('hey', true);
 			dad.playAnim('cheer', true);
+		}
+		if (curSong.toLowerCase() == 'just-kidding' && curBeat >= 69 && curBeat <= 279 )
+		{
+			var amount = curBeat/20;
+			if (FlxG.random.bool(amount) && appearscreen)
+			{
+				var randomthing:FlxSprite = new FlxSprite(FlxG.random.int(300, 1077), FlxG.random.int(0, 622));
+				randomthing.loadGraphic(Paths.image('john/Things/thing' + FlxG.random.int(1,4), 'shared'));
+				FlxG.sound.play(Paths.sound('oop'));
+				randomthing.updateHitbox();
+				randomthing.alpha = 0;
+				randomthing.antialiasing = true;
+				add(randomthing);
+				randomthing.cameras = [camHUD];
+				appearscreen = false;
+				if (storyDifficulty == 0)
+				{
+					FlxTween.tween(randomthing, {width: 1, alpha: 0.5}, 0.2, {ease: FlxEase.sineOut});
+				}
+				else
+				{
+					FlxTween.tween(randomthing, {width: 1, alpha: 1}, 0.2, {ease: FlxEase.sineOut});
+				}
+				new FlxTimer().start(1.5 , function(tmr:FlxTimer)
+				{
+					appearscreen = true;
+				});
+				new FlxTimer().start(2 , function(tmr:FlxTimer)
+				{
+					remove(randomthing);
+				});
+			}
 		}
 
 		switch (curStage)
